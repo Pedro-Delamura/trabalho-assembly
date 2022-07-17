@@ -1,12 +1,106 @@
-########## HELLO WORLD
 .text
 .globl main
 main:
-        la $a0,$texto                # imprime texto "Hello World"
-        li $v0,4
+	ld $a0,$id			# obtém o id da memória
+	beq $a0,1,retangulo		# branch para "retangulo" caso seja um retângulo
+	beq $a0,2,triangulor		# branch para "triangulor" caso seja um triângulo retângulo
+	beq $a0,3,trianguloi		# branch para "trianguloi" caso seja um triângulo isósceles
+	beq $a0,4,circulo		# branch para "circulo" caso seja um círculo
+	j erro				# pula para "erro"
+retangulo:
+	l.s $f12,$base        		# carrega o float $base em $f12                            
+        l.s $f13,$altura		# carrega o float $altura em $f13
+        l.s $f14,$zeroo			# carrega o float $zeroo em $f14 
+	c.le.s 1,$f12,$f14		# verifica se o valor da base é inválido
+	bc1t 1,erro			# branch para "erro" caso o valor da base seja inválido
+	c.le.s 1,$f13,$f14		# verifica se o valor da altura é inválido
+	bc1t 1,erro			# branch para "erro" caso o valor da altura seja inválido
+        la $a0,$retangulo       	# carrega o conteúdo de $retangulo em $a0    
+        li $v0,4			# imprime o conteúdo de $a0
+        syscall				
+        l.s $f12,$base			# carrega o float $base em $f12
+        li $v0,2			# imprime o conteúdo de $f12
+        syscall				
+        la $a0,$ealtura			# carrega o conteúdo de $ealtura em $a0
+        li $v0,4			# imprime o conteúdo de $a0
+        syscall				
+        l.s $f12,$altura		# carrega o float $altura em $f12
+        li $v0,2			# imprime o conteúdo de $f12
+        syscall				
+        la $a0,$perimetro		# carrega o conteúdo de $perimetro em $a0
+        li $v0,4			# imprime o conteúdo de $a0
+        syscall				
+        l.s $f12,$base             	# carrega o float $base em $f12
+        l.s $f13,$altura		# carrega o float $altura em $f13
+        l.s $f14,$dois			# carrega o float $dois em $f14
+        mul.s $f12,$f12,$f14		# multiplica $f12 por $f14 e aloca o valor obtido em $f12
+        mul.s $f13,$f13,$f14		# multiplica $f13 por $f14 e aloca o valor obtido em $f13
+        add.s $f12,$f12,$f13		# soma $f12 e $f13 e aloca o valor obtido em $f12
+        li $v0,2			# imprime o conteúdo de $f12
+        syscall				
+        la $a0,$area			# carrega o conteúdo de $area em $a0
+        li $v0,4			# imprime o conteúdo de $a0
+        syscall				
+        l.s $f12,$base                  # carrega o float $base em $f12
+        l.s $f13,$altura		# carrega o float $altura em $f13
+        mul.s $f12,$f12,$f13        	# multiplica $f12 por $f13 e aloca o valor obtido em $f12
+        li $v0,2			# imprime o conteúdo de $f12
+        syscall				
+        j fim				# pula para "fim"
+triangulor:
+	l.s $f12,$base        		# carrega o float $base em $f12                            
+        l.s $f13,$altura		# carrega o float $altura em $f13
+        l.s $f14,$zeroo			# carrega o float $zeroo em $f14 
+	c.le.s 1,$f12,$f14		# verifica se o valor da base é inválido
+	bc1t 1,erro			# branch para "erro" caso o valor da base seja inválido
+	c.le.s 1,$f13,$f14		# verifica se o valor da altura é inválido
+	bc1t 1,erro			# branch para "erro" caso o valor da altura seja inválido
+	
+        j fim				# pula para "fim"
+trianguloi:
+	l.s $f12,$base        		# carrega o float $base em $f12                            
+        l.s $f13,$altura		# carrega o float $altura em $f13
+        l.s $f14,$zeroo			# carrega o float $zeroo em $f14 
+	c.le.s 1,$f12,$f14		# verifica se o valor da base é inválido
+	bc1t 1,erro			# branch para "erro" caso o valor da base seja inválido
+	c.le.s 1,$f13,$f14		# verifica se o valor da altura é inválido
+	bc1t 1,erro			# branch para "erro" caso o valor da altura seja inválido
+	
+        j fim				# pula para "fim"
+circulo:
+	l.s $f12,$raio             	# carrega o float $raio em $f12                            
+        l.s $f14,$zeroo			# carrega o float $zeroo em $f14
+	c.le.s 1,$f12,$f14		# verifica se o valor do raio é inválido
+	bc1t 1,erro			# branch para "erro" caso o valor do raio seja inválido
+	
+	j fim				# pula para "fim"
+erro:
+	la $a0,$erro                	# carrega o conteúdo de $erro em $a0
+        li $v0,4			# imprime o conteúdo de $a0
         syscall
-        li $v0,10                        # termina
+fim:
+        li $v0,10			# termina
         syscall
 .data
-$texto:
-        .asciiz "Hello World"
+
+########################################## PARÂMETROS ##########################################
+$id: .word 1 # ID: 1 = RETÂNGULO; 2 = TRIÂNGULO RETÂNGULO; 3 = TRIÂNGULO ISÓSCELES; 4 = CÍRCULO
+$base: .float 40
+$altura: .float 10
+$raio: .float 1
+########################################## PARÂMETROS ##########################################
+
+####################### NÃO MODIFICAR #######################
+$retangulo: .asciiz "Retângulo de base "
+$triangulor: .asciiz "Triângulo retângulo de base "
+$trianguloi: .asciiz "Triângulo isósceles de base "
+$circulo: .asciiz "Círculo de raio "
+$ealtura: .asciiz " e altura "
+$erro: .asciiz "Parâmetro(s) inválido(s)"
+$espaço: .asciiz " "
+$perimetro: .asciiz "\nPerímetro: "
+$area: .asciiz "\nÁrea: "
+$zeroo: .float 0
+$dois: .float 2
+$pi: .float 3.14159
+####################### NÃO MODIFICAR #######################

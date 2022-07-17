@@ -85,9 +85,9 @@ fim:
 
 ########################################## PARÂMETROS ##########################################
 $id: .word 1 # ID: 1 = RETÂNGULO; 2 = TRIÂNGULO RETÂNGULO; 3 = TRIÂNGULO ISÓSCELES; 4 = CÍRCULO
-$base: .float 40
-$altura: .float 10
-$raio: .float 1
+$base: .float 40 # base para retângulo ou triângulo
+$altura: .float 10 # altura para retângulo ou triângulo
+$raio: .float 1 # raio para círculo
 ########################################## PARÂMETROS ##########################################
 
 ####################### NÃO MODIFICAR #######################

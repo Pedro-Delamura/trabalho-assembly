@@ -55,10 +55,45 @@ triangulor:
 	bc1t 1,erro			# branch para "erro" caso o valor da base seja inválido
 	c.le.s 1,$f13,$f14		# verifica se o valor da altura é inválido
 	bc1t 1,erro			# branch para "erro" caso o valor da altura seja inválido
-	
-	### COMPLETAR ###
-	
-        j fim				# pula para "fim"
+	la $a0,$triangulor       	# carrega o conteúdo de $retangulo em $a0    
+        li $v0,4			# imprime o conteúdo de $a0
+        syscall
+        l.s $f12,$base			# carrega o float $base em $f12
+        li $v0,2			# imprime o conteúdo de $f12
+        syscall
+        la $a0,$ealtura			# carrega o conteúdo de $ealtura em $a0
+        li $v0,4			# imprime o conteúdo de $a0
+        syscall				
+        l.s $f12,$altura		# carrega o float $altura em $f12
+        li $v0,2			# imprime o conteúdo de $f12
+        syscall
+        la $a0,$perimetro		# carrega o conteúdo de $perimetro em $a0
+        li $v0,4			# imprime o conteúdo de $a0
+        syscall				
+        l.s $f12,$base             	# carrega o float $base em $f12
+        l.s $f13,$altura		# carrega o float $altura em $f13
+        l.s $f14,$dois			# carrega o float $dois em $f14
+        mul.s $f12,$f12,$f12		# multiplica $f12 por $f12 e aloca o resultado em $f12
+	mul.s $f13,$f13,$f13		# multiplica $f13 por $f13 e aloca o resultado em $f13
+	add.s $f12, $f12, $f13		# adciona $f12 e $f13 e aloca o resultado em $f12
+	sqrt.s $f14, $f12 		# extrai a raiz quadrada de $f12 e aloca o resultaod em $f12
+	l.s $f12,$base             	# carrega o float $base em $f12
+        l.s $f13,$altura		# carrega o float $altura em $f13
+        add.s $f12,$f12, $f13		# soma os valores de $f12 e $f13 e aloca em $f12
+        add.s $f12, $f12, $f14		# soma os valores de $f12 e $f14 e aloca em $f12
+        li $v0,2			# imprime o conteúdo de $f12
+        syscall
+        la $a0,$area			# carrega o conteúdo de $area em $a0
+        li $v0,4			# imprime o conteúdo de $a0
+        syscall				
+        l.s $f12,$base                  # carrega o float $base em $f12
+        l.s $f13,$altura		# carrega o float $altura em $f13
+        mul.s $f12,$f12,$f13        	# multiplica $f12 por $f13 e aloca o valor obtido em $f12
+        l.s $f14,$dois			#aloca o valor em $dois para $f14
+        div.s $f12, $f12, $f14		#divide o valor de $f12 pelo valor em $f14 
+        li $v0,2			# imprime o conteúdo de $f12
+        syscall
+        j fim				# pula para "fim
 trianguloi:
 	l.s $f12,$base        		# carrega o float $base em $f12                            
         l.s $f13,$altura		# carrega o float $altura em $f13
@@ -67,9 +102,45 @@ trianguloi:
 	bc1t 1,erro			# branch para "erro" caso o valor da base seja inválido
 	c.le.s 1,$f13,$f14		# verifica se o valor da altura é inválido
 	bc1t 1,erro			# branch para "erro" caso o valor da altura seja inválido
-	
-	### COMPLETAR ###
-	
+	la $a0,$trianguloi       	# carrega o conteúdo de $retangulo em $a0    
+        li $v0,4			# imprime o conteúdo de $a0
+        syscall
+        l.s $f12,$base			# carrega o float $base em $f12
+        li $v0,2			# imprime o conteúdo de $f12
+        syscall
+        la $a0,$ealtura			# carrega o conteúdo de $ealtura em $a0
+        li $v0,4			# imprime o conteúdo de $a0
+        syscall				
+        l.s $f12,$altura		# carrega o float $altura em $f12
+        li $v0,2			# imprime o conteúdo de $f12
+        syscall
+        la $a0,$perimetro		# carrega o conteúdo de $perimetro em $a0
+        li $v0,4			# imprime o conteúdo de $a0
+        syscall
+        l.s $f12,$base             	# carrega o float $base em $f12
+        l.s $f13,$altura		# carrega o float $altura em $f13
+        l.s $f14,$dois			# carrega o float $dois em $f14
+        div.s $f12, $f12, $f14		# divide $f12 por f$14 e aloca em f$12
+        mul.s $f12,$f12,$f12		# multiplica $f12 por $f12 e aloca o resultado em $f12
+	mul.s $f13,$f13,$f13		# multiplica $f13 por $f13 e aloca o resultado em $f13
+	add.s $f12, $f12, $f13		# adciona $f12 e $f13 e aloca o resultado em $f12
+	sqrt.s $f14, $f12 		# extrai a raiz quadrada de $f12 e aloca o resultaod em $f12
+	l.s $f12,$base             	# carrega o float $base em $f12
+	l.s $f13, $dois			# carregao o valor de $dois em $f13
+        mul.s $f14, $f14, $f13		# multiplica $f14 por $f13 e aloca em $f14
+        add.s $f12, $f12, $f14		# soma os valores de $f12 e $f14 e aloca em $f12
+        li $v0,2			# imprime o conteúdo de $f12
+        syscall 
+        la $a0,$area			# carrega o conteúdo de $area em $a0
+        li $v0,4			# imprime o conteúdo de $a0
+        syscall				
+        l.s $f12,$base                  # carrega o float $base em $f12
+        l.s $f13,$altura		# carrega o float $altura em $f13
+        mul.s $f12,$f12,$f13        	# multiplica $f12 por $f13 e aloca o valor obtido em $f12
+        l.s $f14,$dois			#aloca o valor em $dois para $f14
+        div.s $f12, $f12, $f14		#divide o valor de $f12 pelo valor em $f14 
+        li $v0,2			# imprime o conteúdo de $f12
+        syscall	
         j fim				# pula para "fim"
 circulo:
 	l.s $f12,$raio             	# carrega o float $raio em $f12                            
